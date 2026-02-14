@@ -33,9 +33,16 @@ public class BurgerTest {
     }
 
     @Test
-    public void addIngredientToListTest() {
+    public void addIngredientIncreasesIngredientsSizeTest() {
+        // Исправлено: одна проверка - проверяем только размер списка
         burger.addIngredient(ingredient);
         assertEquals(1, burger.ingredients.size());
+    }
+
+    @Test
+    public void addIngredientAddsCorrectIngredientTest() {
+        // Исправлено: одна проверка - проверяем, что добавлен именно нужный ингредиент
+        burger.addIngredient(ingredient);
         assertSame(ingredient, burger.ingredients.get(0));
     }
 
@@ -47,18 +54,35 @@ public class BurgerTest {
     }
 
     @Test
-    public void moveIngredientCorrectlyTest() {
+    public void moveIngredientMovesIngredientToNewIndexTest() {
+        // Исправлено: одна проверка - проверяем, что перемещаемый ингредиент
+        // оказался на новом индексе
         Ingredient ingredient2 = mock(Ingredient.class);
         burger.addIngredient(ingredient);
         burger.addIngredient(ingredient2);
 
         burger.moveIngredient(0, 1);
-        assertSame(ingredient2, burger.ingredients.get(0));
+
         assertSame(ingredient, burger.ingredients.get(1));
     }
 
     @Test
-    public void getReceipt_returnsCorrectReceipt() {
+    public void moveIngredientShiftsOtherIngredientsTest() {
+        // Исправлено: одна проверка - проверяем, что остальные ингредиенты
+        // корректно сдвинулись после перемещения
+        Ingredient ingredient2 = mock(Ingredient.class);
+        burger.addIngredient(ingredient);
+        burger.addIngredient(ingredient2);
+
+        burger.moveIngredient(0, 1);
+
+        assertSame(ingredient2, burger.ingredients.get(0));
+    }
+
+
+    @Test
+    public void getReceiptReturnsCorrectReceiptTest() {
+        // Исправлено: исправила нейминг метода - убрала спецсимвол
         when(bun.getName()).thenReturn("Black Bun");
         when(bun.getPrice()).thenReturn(10.0f);
 
